@@ -4,6 +4,7 @@ from envs.fish_env import FishEnv
 from models.ppo_marl import PPO
 from memory import Memory
 
+
 # Hyperparameters
 NUM_AGENTS = 2
 OBS_DIM = 8         # From fish_env.py
@@ -14,8 +15,13 @@ EPISODES = 1000
 UPDATE_EVERY = 2000  # How many steps before PPO update
 LOG_INTERVAL = 10
 
+RENDER = True
+
 def main():
-    env = FishEnv(num_agents=NUM_AGENTS)
+    render = None
+    if RENDER:
+        render = "human"
+    env = FishEnv(num_agents=NUM_AGENTS, render_mode=render)
     memory = Memory(NUM_AGENTS)
     ppo = PPO(
         num_agents=NUM_AGENTS,
@@ -38,6 +44,8 @@ def main():
                 actions.append(action)
 
             next_local_obs, next_global_state, rewards, dones, _ = env.step(actions)
+            if(RENDER):
+                env.render()
 
             for agent_id in range(NUM_AGENTS):
                 memory.rewards[agent_id].append(rewards[agent_id])
