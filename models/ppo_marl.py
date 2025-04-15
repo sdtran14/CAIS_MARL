@@ -112,4 +112,4 @@ class PPO:
         for step in reversed(range(len(rewards[0]))):
             R = sum([rewards[i][step] for i in range(self.num_agents)]) / self.num_agents + gamma * R * (1 - dones[0][step])
             returns.insert(0, R)
-        return torch.tensor(returns, dtype=torch.float32).to(device)
+        return torch.FloatTensor(returns).to(device)
