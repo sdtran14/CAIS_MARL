@@ -5,6 +5,7 @@ class Memory:
         self.logprobs = [[] for _ in range(num_agents)]     # Log probs of actions
         self.rewards = [[] for _ in range(num_agents)]      # Rewards received
         self.is_terminals = [[] for _ in range(num_agents)] # Done flags
+        self.global_states = []
 
     def clear(self):
         for agent_data in [
@@ -16,3 +17,4 @@ class Memory:
         ]:
             for entry in agent_data:
                 entry.clear()
+        self.global_states.clear()
